@@ -40,7 +40,24 @@ public class PokemonController {
         model.addAttribute("weight", pokemons.getWeight());
         model.addAttribute("height", pokemons.getHeight());
         model.addAttribute("types", pokemons.getTypes());
+        model.addAttribute("id", pokemons.getTypes());
+        System.out.println(pokemons.getAbilities());
+        System.out.println(pokemons.getSpecies());
+        return "pokemons/pokemon";
 
+    }
+
+    @GetMapping("pokemon/{PokemonId}")
+    public String getDetailsId (@PathVariable("PokemonId") Integer id, Model model){
+        PokemonDTO pokemons = pokemonService.getPokemonId(id);
+
+        model.addAttribute("abilities", pokemons.getAbilities());
+        model.addAttribute("name", pokemons.getSpecies());
+        model.addAttribute("sprites", pokemons.getSprites());
+        model.addAttribute("weight", pokemons.getWeight());
+        model.addAttribute("height", pokemons.getHeight());
+        model.addAttribute("types", pokemons.getTypes());
+        model.addAttribute("id", pokemons.getId());
         System.out.println(pokemons.getAbilities());
         System.out.println(pokemons.getSpecies());
         return "pokemons/pokemon";

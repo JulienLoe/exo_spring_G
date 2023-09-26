@@ -121,6 +121,63 @@ public class PokemonService {
                 .build();
     }
 
+    public PokemonDTO getPokemonId(Integer idPokemon) {
+        RestTemplate restTemplate = builder.build();
+
+        ResponseEntity<JsonNode> responseJson = restTemplate
+                .getForEntity("pokemon/" + idPokemon, JsonNode.class);
+
+        List<String> abilityNames = new ArrayList<>();
+        List<String> namePokemon = new ArrayList<>();
+        List<String> sprites = new ArrayList<>();
+        List<String> weights = new ArrayList<>();
+        List<String> heights = new ArrayList<>();
+        List<String> types = new ArrayList<>();
+        List<Integer> id = new ArrayList<>();
+
+        String nameFound = responseJson.getBody().get("name").asText();
+
+        responseJson.getBody().findPath("abilities").elements().forEachRemaining(a -> {
+            abilityNames.add(a.findPath("ability").get("name").asText());
+//                    namePokemon.add(a.findPath("species").get("name").asText());
+        });
+
+        String nameP = responseJson.getBody().findPath("species").findPath("name").asText();
+        namePokemon.add(nameP);
+//                    namePokemon.add(a.findPath("species").get("name").asText());
+        ;
+
+        String sprite = responseJson.getBody().findPath("sprites").findPath("back_shiny").asText();
+        sprites.add(sprite);
+
+        String weight = responseJson.getBody().findPath("weight").asText();
+        weights.add(weight);
+
+        String height = responseJson.getBody().findPath("height").asText();
+        heights.add(height);
+
+        responseJson.getBody().findPath("types").elements().forEachRemaining(a -> {
+            types.add(a.findPath("type").get("name").asText());
+//                    namePokemon.add(a.findPath("species").get("name").asText());
+        });
+
+        responseJson.getBody().findPath("game_indices").elements().forEachRemaining(a -> {
+            id.add(a.get("game_index").asInt());
+//                    namePokemon.add(a.findPath("species").get("name").asText());
+        });
+
+        return PokemonDTO
+                .builder()
+                .abilities(abilityNames)
+                .species(namePokemon)
+                .sprites(sprites)
+                .types(types)
+                .weight(weights)
+                .height(heights)
+                .id(id)
+                .build();
+    }
+
     public List<String> getPostsJsonNode() {
         RestTemplate restTemplate = builder.build();
 

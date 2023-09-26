@@ -21,6 +21,7 @@ public class PokemonDTO {
     private List<String> weight = new ArrayList<>();
     private List<String> height = new ArrayList<>();
     private List<String> types = new ArrayList<>();
+    private List<Integer> id = new ArrayList<>();
 
 
 

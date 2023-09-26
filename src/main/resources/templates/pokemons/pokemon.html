@@ -49,6 +49,9 @@
     <div class="text-end">
 <!--        <a th:href="@{/contacts/add}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Add a Contact</a>-->
     </div>
+
+    <a th:href="@{{id}(id = ${id.get(0)-1})}"><button  class="btn btn-success"> Précédent</button></a>
+    <a th:href="@{{id}(id = ${id.get(0)+1})}"><button th:unless="${id.get(0) == 0}" class="btn btn-success"> Suivant</button></a>
 </main>
 </body>
 </html>
